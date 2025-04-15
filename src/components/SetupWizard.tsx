@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { DollarSign, EuroSign, IndianRupee, CreditCard } from 'lucide-react';
+import { DollarSign, Euro, IndianRupee, CreditCard } from 'lucide-react';
 
 interface SetupFormData {
   currency: string;
@@ -28,7 +28,7 @@ export function SetupWizard({ onComplete }: { onComplete: (data: SetupFormData) 
   
   const currencyOptions = [
     { value: '$', label: 'USD', icon: DollarSign },
-    { value: '€', label: 'EUR', icon: EuroSign },
+    { value: '€', label: 'EUR', icon: Euro },
     { value: '₹', label: 'INR', icon: IndianRupee }
   ];
 

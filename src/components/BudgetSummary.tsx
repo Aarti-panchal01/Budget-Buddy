@@ -1,18 +1,23 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Income, Expense } from '@/utils/budgetTypes';
-import { calculateTotalIncome, calculateTotalExpenses, calculateBalance, formatCurrency } from '@/utils/budgetCalculations';
+import { calculateTotalIncome, calculateTotalExpenses, calculateBalance } from '@/utils/budgetCalculations';
 import { TrendingUp, TrendingDown, Banknote } from 'lucide-react';
 
 interface BudgetSummaryProps {
   incomes: Income[];
   expenses: Expense[];
+  currency: string;
 }
 
-export function BudgetSummary({ incomes, expenses }: BudgetSummaryProps) {
+export function BudgetSummary({ incomes, expenses, currency }: BudgetSummaryProps) {
   const totalIncome = calculateTotalIncome(incomes);
   const totalExpenses = calculateTotalExpenses(expenses);
   const balance = calculateBalance(incomes, expenses);
+  
+  const formatCurrency = (amount: number) => {
+    return `${currency}${amount.toFixed(2)}`;
+  };
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

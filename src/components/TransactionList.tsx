@@ -1,6 +1,5 @@
 
 import { Expense, Income } from '@/utils/budgetTypes';
-import { formatCurrency } from '@/utils/budgetCalculations';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react';
@@ -8,9 +7,10 @@ import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react';
 interface TransactionListProps {
   incomes: Income[];
   expenses: Expense[];
+  currency: string;
 }
 
-export function TransactionList({ incomes, expenses }: TransactionListProps) {
+export function TransactionList({ incomes, expenses, currency }: TransactionListProps) {
   // Sort transactions by date (most recent first)
   const sortedIncomes = [...incomes].sort((a, b) => 
     new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -28,6 +28,10 @@ export function TransactionList({ incomes, expenses }: TransactionListProps) {
       day: 'numeric',
       year: 'numeric',
     });
+  };
+  
+  const formatCurrency = (amount: number) => {
+    return `${currency}${amount.toFixed(2)}`;
   };
   
   return (

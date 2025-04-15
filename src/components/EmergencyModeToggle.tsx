@@ -13,6 +13,7 @@ interface EmergencyModeToggleProps {
   dailyLimit: number;
   weeklyLimit: number;
   onUpdateLimits: (daily: number, weekly: number) => void;
+  currency: string;
 }
 
 export function EmergencyModeToggle({
@@ -21,6 +22,7 @@ export function EmergencyModeToggle({
   dailyLimit,
   weeklyLimit,
   onUpdateLimits,
+  currency,
 }: EmergencyModeToggleProps) {
   const [newDailyLimit, setNewDailyLimit] = useState<string>(dailyLimit.toString());
   const [newWeeklyLimit, setNewWeeklyLimit] = useState<string>(weeklyLimit.toString());
@@ -61,12 +63,12 @@ export function EmergencyModeToggle({
               <div className="flex justify-between">
                 <Label className="text-sm text-gray-600">Daily Limit</Label>
                 {!isEditing && (
-                  <span className="text-sm font-medium">${dailyLimit.toFixed(2)}</span>
+                  <span className="text-sm font-medium">{currency}{dailyLimit.toFixed(2)}</span>
                 )}
               </div>
               {isEditing && (
                 <div className="mt-1 relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">{currency}</span>
                   <Input
                     type="number"
                     value={newDailyLimit}
@@ -83,12 +85,12 @@ export function EmergencyModeToggle({
               <div className="flex justify-between">
                 <Label className="text-sm text-gray-600">Weekly Limit</Label>
                 {!isEditing && (
-                  <span className="text-sm font-medium">${weeklyLimit.toFixed(2)}</span>
+                  <span className="text-sm font-medium">{currency}{weeklyLimit.toFixed(2)}</span>
                 )}
               </div>
               {isEditing && (
                 <div className="mt-1 relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">{currency}</span>
                   <Input
                     type="number"
                     value={newWeeklyLimit}

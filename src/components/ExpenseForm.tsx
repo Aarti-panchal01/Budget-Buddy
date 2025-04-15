@@ -12,9 +12,10 @@ interface ExpenseFormProps {
   onAddExpense: (expense: Expense) => void;
   categories: Category[];
   emergencyMode: boolean;
+  currency: string;
 }
 
-export function ExpenseForm({ onAddExpense, categories, emergencyMode }: ExpenseFormProps) {
+export function ExpenseForm({ onAddExpense, categories, emergencyMode, currency }: ExpenseFormProps) {
   const [amount, setAmount] = useState<string>('');
   const [category, setCategory] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -61,7 +62,7 @@ export function ExpenseForm({ onAddExpense, categories, emergencyMode }: Expense
             <div className="space-y-2">
               <Label htmlFor="amount">Amount</Label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">{currency}</span>
                 <Input
                   id="amount"
                   type="number"

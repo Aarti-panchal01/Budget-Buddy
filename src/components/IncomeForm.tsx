@@ -11,9 +11,10 @@ import { PlusCircleIcon } from 'lucide-react';
 
 interface IncomeFormProps {
   onAddIncome: (income: Income) => void;
+  currency: string;
 }
 
-export function IncomeForm({ onAddIncome }: IncomeFormProps) {
+export function IncomeForm({ onAddIncome, currency }: IncomeFormProps) {
   const [amount, setAmount] = useState<string>('');
   const [source, setSource] = useState<string>('Salary');
   const [notes, setNotes] = useState<string>('');
@@ -52,7 +53,7 @@ export function IncomeForm({ onAddIncome }: IncomeFormProps) {
             <div className="space-y-2">
               <Label htmlFor="amount">Amount</Label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">{currency}</span>
                 <Input
                   id="amount"
                   type="number"
