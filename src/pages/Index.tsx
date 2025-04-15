@@ -1,5 +1,5 @@
-
 import { useState, useEffect } from 'react';
+import { SetupWizard } from '@/components/SetupWizard';
 import { BudgetState, Income, Expense, DEFAULT_BUDGET_STATE } from '@/utils/budgetTypes';
 import { saveBudgetData, loadBudgetData } from '@/utils/budgetStorage';
 import { DailyQuote } from '@/components/DailyQuote';
@@ -11,21 +11,47 @@ import { BudgetCharts } from '@/components/BudgetCharts';
 import { TransactionList } from '@/components/TransactionList';
 import { BudgetAlert } from '@/components/BudgetAlert';
 
+interface SetupData {
+  currency: string;
+  userType: 'student' | 'working';
+  initialBalance: number;
+  monthlyIncome: number;
+  categories: string[];
+}
+
 export default function Index() {
+  const [isSetupComplete, setIsSetupComplete] = useState<boolean>(false);
   const [budgetData, setBudgetData] = useState<BudgetState>(DEFAULT_BUDGET_STATE);
   
-  // Load data from localStorage on component mount
   useEffect(() => {
     const data = loadBudgetData();
-    setBudgetData(data);
+    if (data.isSetupComplete) {
+      setIsSetupComplete(true);
+      setBudgetData(data);
+    }
   }, []);
   
-  // Save data to localStorage whenever it changes
-  useEffect(() => {
-    saveBudgetData(budgetData);
-  }, [budgetData]);
+  const handleSetupComplete = (setupData: SetupData) => {
+    const newBudgetState: BudgetState = {
+      ...DEFAULT_BUDGET_STATE,
+      isSetupComplete: true,
+      currency: setupData.currency,
+      userType: setupData.userType,
+      initialBalance: setupData.initialBalance,
+      monthlyIncome: setupData.monthlyIncome,
+      incomes: [{
+        id: Date.now().toString(),
+        amount: setupData.monthlyIncome,
+        source: setupData.userType === 'student' ? 'Allowance' : 'Salary',
+        date: new Date().toISOString()
+      }]
+    };
+    
+    setBudgetData(newBudgetState);
+    saveBudgetData(newBudgetState);
+    setIsSetupComplete(true);
+  };
   
-  // Handler for adding a new income
   const handleAddIncome = (income: Income) => {
     setBudgetData((prev) => ({
       ...prev,
@@ -33,7 +59,6 @@ export default function Index() {
     }));
   };
   
-  // Handler for adding a new expense
   const handleAddExpense = (expense: Expense) => {
     setBudgetData((prev) => ({
       ...prev,
@@ -41,7 +66,6 @@ export default function Index() {
     }));
   };
   
-  // Handler for toggling emergency mode
   const handleToggleEmergencyMode = (enabled: boolean) => {
     setBudgetData((prev) => ({
       ...prev,
@@ -49,7 +73,6 @@ export default function Index() {
     }));
   };
   
-  // Handler for updating budget limits
   const handleUpdateBudgetLimits = (daily: number, weekly: number) => {
     setBudgetData((prev) => ({
       ...prev,
@@ -58,7 +81,6 @@ export default function Index() {
     }));
   };
   
-  // Handler for activating emergency mode (from alerts)
   const handleActivateEmergencyMode = () => {
     setBudgetData((prev) => ({
       ...prev,
@@ -66,12 +88,16 @@ export default function Index() {
     }));
   };
   
+  if (!isSetupComplete) {
+    return <SetupWizard onComplete={handleSetupComplete} />;
+  }
+  
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       <div className="container mx-auto py-8 px-4">
         <header className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Budget Buddy</h1>
-          <p className="text-gray-600">Your friendly financial companion</p>
+          <p className="text-gray-600">Your personal finance companion</p>
         </header>
         
         <div className="mb-6">
@@ -90,18 +116,23 @@ export default function Index() {
           <BudgetSummary
             incomes={budgetData.incomes}
             expenses={budgetData.expenses}
+            currency={budgetData.currency}
           />
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
           <div className="space-y-8">
-            <IncomeForm onAddIncome={handleAddIncome} />
+            <IncomeForm 
+              onAddIncome={handleAddIncome}
+              currency={budgetData.currency}
+            />
             <EmergencyModeToggle
               emergencyMode={budgetData.emergencyMode}
               onToggle={handleToggleEmergencyMode}
               dailyLimit={budgetData.dailyBudgetLimit}
               weeklyLimit={budgetData.weeklyBudgetLimit}
               onUpdateLimits={handleUpdateBudgetLimits}
+              currency={budgetData.currency}
             />
           </div>
           
@@ -110,6 +141,7 @@ export default function Index() {
               onAddExpense={handleAddExpense}
               categories={budgetData.categories}
               emergencyMode={budgetData.emergencyMode}
+              currency={budgetData.currency}
             />
           </div>
           
@@ -117,6 +149,7 @@ export default function Index() {
             <TransactionList
               incomes={budgetData.incomes}
               expenses={budgetData.expenses}
+              currency={budgetData.currency}
             />
           </div>
         </div>
@@ -125,6 +158,7 @@ export default function Index() {
           <BudgetCharts
             expenses={budgetData.expenses}
             categories={budgetData.categories}
+            currency={budgetData.currency}
           />
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 export interface Income {
   id: string;
   amount: number;
@@ -16,21 +15,26 @@ export interface Expense {
   isEssential: boolean;
 }
 
-export interface BudgetState {
-  incomes: Income[];
-  expenses: Expense[];
-  emergencyMode: boolean;
-  dailyBudgetLimit: number;
-  weeklyBudgetLimit: number;
-  categories: Category[];
-}
-
 export interface Category {
   id: string;
   name: string;
   color: string;
   isEssential: boolean;
   icon?: string;
+}
+
+export interface BudgetState {
+  isSetupComplete: boolean;
+  currency: string;
+  userType: 'student' | 'working';
+  initialBalance: number;
+  monthlyIncome: number;
+  incomes: Income[];
+  expenses: Expense[];
+  emergencyMode: boolean;
+  dailyBudgetLimit: number;
+  weeklyBudgetLimit: number;
+  categories: Category[];
 }
 
 export const DEFAULT_CATEGORIES: Category[] = [
@@ -57,6 +61,11 @@ export const DEFAULT_INCOME_SOURCES = [
 ];
 
 export const DEFAULT_BUDGET_STATE: BudgetState = {
+  isSetupComplete: false,
+  currency: '$',
+  userType: 'working',
+  initialBalance: 0,
+  monthlyIncome: 0,
   incomes: [],
   expenses: [],
   emergencyMode: false,
