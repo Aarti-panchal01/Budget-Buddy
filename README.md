@@ -2,7 +2,7 @@
 
 Welcome to *Calm-cash-compass* , your personal finance companion! Whether you're a student managing pocket money or a working professional tracking your salary, this app helps you stay in control of your money.
 
-🌐 **Live Web App:** [Click Here to Use Calm-cash-compass  ](https://preview--calm-cash-compass.lovable.app/)
+🌐 **Live Web App:** [Click Here to Use Calm-cash-compass  ](https://calm-cash-compass.lovable.app/)
 
 ---
 
