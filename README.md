@@ -1,8 +1,8 @@
-# 💰 Budget-Buddy  - Personal Finance Tracker
+# 💰 calm-cash-compass  - Personal Finance Tracker
 
-Welcome to *Budget-Buddy* , your personal finance companion! Whether you're a student managing pocket money or a working professional tracking your salary, this app helps you stay in control of your money.
+Welcome to *calm-cash-compass* , your personal finance companion! Whether you're a student managing pocket money or a working professional tracking your salary, this app helps you stay in control of your money.
 
-🌐 **Live Web App:** [Click Here!](https://budget-buddy-iota-six.vercel.app/)
+🌐 **Live Web App:** [Click Here!](https://calm-cash-compass.vercel.app/)
 
 ---
 
@@ -29,7 +29,7 @@ Welcome to *Budget-Buddy* , your personal finance companion! Whether you're a st
 
 ## 🚀 How to Use
 
-1. Go to the [Live web-page](https://budget-buddy-iota-six.vercel.app/)
+1. Go to the [Live web-page](https://calm-cash-compass.vercel.app/)
 2. Set your currency, user type, and monthly balance
 3. Add your spending entries regularly
 4. Enable Emergency Mode when you want to control your expenses
